@@ -142,10 +142,10 @@
    <widget class="QMenu" name="MenuVatsinator">
     <property name="geometry">
      <rect>
-      <x>227</x>
+      <x>222</x>
       <y>165</y>
       <width>180</width>
-      <height>210</height>
+      <height>234</height>
      </rect>
     </property>
     <property name="minimumSize">
@@ -160,6 +160,7 @@
     <addaction name="ActionMetar"/>
     <addaction name="ActionRefresh"/>
     <addaction name="EnableAutoUpdatesAction"/>
+    <addaction name="ActionFilterMode"/>
     <addaction name="separator"/>
     <addaction name="ActionFlightList"/>
     <addaction name="ActionATCList"/>
@@ -270,6 +271,17 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+R</string>
+   </property>
+  </action>
+  <action name="ActionFilterMode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Filter mode</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F</string>
    </property>
   </action>
  </widget>

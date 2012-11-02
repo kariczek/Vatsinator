@@ -41,6 +41,7 @@
 
 UserInterface::UserInterface(QWidget* _parent) :
     QMainWindow(_parent),
+    __filterMode(false),
 #ifndef NO_DEBUG
     __debugWindow(new DebugWindow()),
 #endif
@@ -73,6 +74,8 @@ UserInterface::UserInterface(QWidget* _parent) :
           __atcListWindow,                          SLOT(show()));
   connect(EnableAutoUpdatesAction,                  SIGNAL(toggled(bool)),
           this,                                     SIGNAL(autoUpdatesEnabled(bool)));
+  connect(ActionFilterMode,                         SIGNAL(toggled(bool)),
+          this,                                     SLOT(__filterModeToggled(bool)));
   connect(VatsinatorApplication::getSingletonPtr(), SIGNAL(dataDownloading()),
           this,                                     SLOT(__dataDownloading()));
   connect(VatsinatorApplication::getSingletonPtr(), SIGNAL(dataUpdated()),
@@ -276,4 +279,9 @@ UserInterface::__dataDownloading() {
 void
 UserInterface::__dataUpdated() {
   Replaceable->setCurrentWidget(__statusBox);
+}
+
+void
+UserInterface::__filterModeToggled(bool _on) {
+  __filterMode = _on;
 }

@@ -91,6 +91,9 @@ public:
   
   inline bool
   autoUpdatesEnabled() const { return EnableAutoUpdatesAction->isChecked(); }
+  
+  inline bool
+  filterModeActive() const { return __filterMode; }
 
 public slots:
   void quit();
@@ -109,6 +112,8 @@ private:
   
   QLabel*       __statusBox;
   QProgressBar* __progressBar;
+  
+  bool __filterMode;
 
 
 #ifndef NO_DEBUG
@@ -128,6 +133,7 @@ private:
 private slots:
   void __dataDownloading();
   void __dataUpdated();
+  void __filterModeToggled(bool);
   
 signals:
   void autoUpdatesEnabled(bool);
