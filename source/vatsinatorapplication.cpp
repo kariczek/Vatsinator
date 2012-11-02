@@ -28,6 +28,7 @@
 
 #include "network/httphandler.h"
 
+#include "settings/filtermanager.h"
 #include "settings/languagemanager.h"
 #include "settings/settingsmanager.h"
 
@@ -45,6 +46,7 @@ VatsinatorApplication::VatsinatorApplication(int& _argc, char** _argv) :
     QApplication(_argc, _argv),
     __airportsData(new AirportDatabase()),
     __firsData(new FirDatabase()),
+    __filterManager(new FilterManager()),
     __worldMap(new WorldMap()),
     __vatsimData(new VatsimDataHandler()),
     __languageManager(new LanguageManager()),
@@ -103,6 +105,9 @@ VatsinatorApplication::VatsinatorApplication(int& _argc, char** _argv) :
     __timer.start();
     refreshData();
   }
+  
+  // tests
+  FilterManager::getSingleton().addFilter(FilterRule::CALLSIGN_STARTS_WITH, "BAW");
 }
 
 VatsinatorApplication::~VatsinatorApplication() {

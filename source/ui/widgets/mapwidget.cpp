@@ -1112,7 +1112,8 @@ MapWidget::__drawPilots(float _moveX) {
   
   for (const Pilot * client: VatsimDataHandler::getSingleton().getFlightsModel()->getFlights()) {
     Q_ASSERT(client);
-    if (client->flightStatus != AIRBORNE || client->prefiledOnly)
+    
+    if (client->flightStatus != AIRBORNE || client->prefiledOnly || !client->matchesFilters())
       continue;
 
     GLfloat x = ((client->position.longitude + _moveX) / 180 - __position.x()) * __zoom;

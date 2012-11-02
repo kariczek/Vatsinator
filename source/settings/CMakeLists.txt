@@ -1,6 +1,8 @@
 vatsinator_start_subdirectory (settings)
 
 set (settings_SRCS
+    filtermanager.cpp
+    filterrule.cpp
     languagemanager.cpp
     settingsmanager.cpp
 )

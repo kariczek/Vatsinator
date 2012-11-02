@@ -68,6 +68,9 @@ public:
 
   inline GLuint
   getCallsignTip() const { return __callsignTip ? __callsignTip : __generateTip(); }
+  
+  inline bool
+  matchesFilters() const { return __matchesFilters; }
 
   int   altitude;
   int   groundSpeed;
@@ -121,6 +124,9 @@ private:
   GLfloat* __lineTo;
 
   mutable GLuint __callsignTip;
+  
+  /* Indicates whether pilot matches all filters or not */
+  bool __matchesFilters;
 
 };
 

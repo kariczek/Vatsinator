@@ -30,13 +30,14 @@
 class AirportDatabase;
 class CacheFile;
 class FirDatabase;
+class FilterManager;
+class HttpHandler;
+class LanguageManager;
+class ModuleManager;
 class UserInterface;
 class VatsimDataHandler;
-class LanguageManager;
 class SettingsManager;
 class WorldMap;
-class HttpHandler;
-class ModuleManager;
 
 class VatsinatorApplication :
     public QApplication,
@@ -114,6 +115,7 @@ private:
   HttpHandler*       __httpHandler;
   AirportDatabase*   __airportsData;
   FirDatabase*       __firsData;
+  FilterManager*     __filterManager;
   WorldMap*          __worldMap;
   VatsimDataHandler* __vatsimData;
   LanguageManager*   __languageManager;
