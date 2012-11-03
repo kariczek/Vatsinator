@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>687</width>
-    <height>520</height>
+    <height>534</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -894,6 +894,17 @@
          </item>
         </layout>
        </widget>
+       <widget class="QWidget" name="FiltersPage">
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QGroupBox" name="FiltersBox">
+           <property name="title">
+            <string>Filters</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
       </widget>
      </item>
      <item row="0" column="0">
@@ -938,7 +949,7 @@
         <number>2</number>
        </property>
        <property name="currentRow">
-        <number>0</number>
+        <number>-1</number>
        </property>
        <item>
         <property name="text">
@@ -968,6 +979,15 @@
         <property name="icon">
          <iconset resource="imgs.qrc">
           <normaloff>:/settings/preferences-colors.png</normaloff>:/settings/preferences-colors.png</iconset>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Filters</string>
+        </property>
+        <property name="icon">
+         <iconset resource="imgs.qrc">
+          <normaloff>:/settings/preferences-filters.png</normaloff>:/settings/preferences-filters.png</iconset>
         </property>
        </item>
       </widget>
