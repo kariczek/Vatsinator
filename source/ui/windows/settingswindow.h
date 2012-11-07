@@ -23,6 +23,7 @@
 #include "ui/ui_settingswindow.h"
 #include "singleton.h"
 
+class FilterSetupWidget;
 class SettingsManager;
 
 class SettingsWindow :
@@ -39,6 +40,7 @@ public:
 
 public slots:
   void show();
+  void addFilterSetupWidget(FilterSetupWidget*);
 
 private:
 

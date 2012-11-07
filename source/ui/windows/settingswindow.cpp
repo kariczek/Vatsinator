@@ -21,6 +21,7 @@
 #include "settings/languagemanager.h"
 #include "settings/settingsmanager.h"
 
+#include "ui/widgets/filtersetupwidget.h"
 #include "ui/widgets/mapwidget.h"
 
 #include "ui/userinterface.h"
@@ -49,6 +50,11 @@ void
 SettingsWindow::show() {
   __updateWindow();
   QWidget::show();
+}
+
+void
+SettingsWindow::addFilterSetupWidget(FilterSetupWidget* _fsw) {
+  FiltersLayout->addWidget(_fsw);
 }
 
 void

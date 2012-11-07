@@ -901,6 +901,11 @@
            <property name="title">
             <string>Filters</string>
            </property>
+           <layout class="QVBoxLayout" name="verticalLayout_7">
+            <item>
+             <layout class="QVBoxLayout" name="FiltersLayout"/>
+            </item>
+           </layout>
           </widget>
          </item>
         </layout>
