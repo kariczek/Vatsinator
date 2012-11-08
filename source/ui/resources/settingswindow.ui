@@ -903,7 +903,24 @@
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_7">
             <item>
-             <layout class="QVBoxLayout" name="FiltersLayout"/>
+             <widget class="QTableView" name="FilterTable">
+              <property name="horizontalScrollBarPolicy">
+               <enum>Qt::ScrollBarAlwaysOff</enum>
+              </property>
+              <attribute name="horizontalHeaderVisible">
+               <bool>false</bool>
+              </attribute>
+              <attribute name="verticalHeaderVisible">
+               <bool>false</bool>
+              </attribute>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="AddFilterButton">
+              <property name="text">
+               <string>Add new filter</string>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>

@@ -23,7 +23,8 @@
 
 FilterRule::FilterRule(FilterRule::FilterField _field, const QString& _rule) :
     __field(_field),
-    __rule(_rule) {}
+    __rule(_rule),
+    __active(false) {}
 
 bool
 FilterRule::matches(const Pilot& _pilot) const {
@@ -37,4 +38,23 @@ FilterRule::matches(const Pilot& _pilot) const {
   }
   
   return false;
+}
+
+QString
+FilterRule::getName() const {
+  return __convertFieldToString() % " " % __rule;
+}
+
+QString
+FilterRule::__convertFieldToString() const {
+  switch (__field) {
+    case CALLSIGN_STARTS_WITH:
+      return tr("Callsign starts with");
+    case CALLSIGN_ENDS_WITH:
+      return tr("Callsign ends with");
+    case CALLSIGN_CONTAINS:
+      return tr("Callsign contains");
+    default:
+      return QString();
+  }
 }

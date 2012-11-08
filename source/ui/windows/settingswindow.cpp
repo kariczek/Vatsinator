@@ -18,10 +18,13 @@
 
 #include <QtGui>
 
+#include "settings/delegates/filterdelegate.h"
+
+#include "settings/models/filtertablemodel.h"
+
 #include "settings/languagemanager.h"
 #include "settings/settingsmanager.h"
 
-#include "ui/widgets/filtersetupwidget.h"
 #include "ui/widgets/mapwidget.h"
 
 #include "ui/userinterface.h"
@@ -35,26 +38,31 @@ SettingsWindow::SettingsWindow(QWidget* _parent) :
   setupUi(this);
   UserInterface::setWindowPosition(this);
   LanguageComboBox->addItems(LanguageManager::getSingleton().getAllLanguages());
+  FilterTable->setItemDelegate(new FilterDelegate());
+  FilterTable->setModel(FilterTableModel::getSingletonPtr());
 
-  connect(OKCancelButtonBox,  SIGNAL(clicked(QAbstractButton*)),
-          this,     SLOT(__handleButton(QAbstractButton*)));
-  connect(OKCancelButtonBox,  SIGNAL(accepted()),
-          this,     SLOT(hide()));
+  connect(FilterTable->verticalHeader(),  SIGNAL(sectionCountChanged(int,int)),
+          this,                           SLOT(__adjustFilterTable(int, int)));
+  connect(OKCancelButtonBox,              SIGNAL(clicked(QAbstractButton*)),
+          this,                           SLOT(__handleButton(QAbstractButton*)));
+  connect(OKCancelButtonBox,              SIGNAL(accepted()),
+          this,                           SLOT(hide()));
   connect(ShowPilotsLabelsAlwaysCheckBox, SIGNAL(stateChanged(int)),
-          this,     SLOT(__handleAlwaysCheckBox(int)));
-  connect(__mySettingsManager,  SIGNAL(settingsRestored()),
-          this,     SLOT(__updateWindow()));
+          this,                           SLOT(__handleAlwaysCheckBox(int)));
+  connect(__mySettingsManager,            SIGNAL(settingsRestored()),
+          this,                           SLOT(__updateWindow()));
+  connect(AddFilterButton,                       SIGNAL(clicked()),
+          FilterTableModel::getSingletonPtr(),   SLOT(newFilter()));
+}
+
+SettingsWindow::~SettingsWindow() {
+  delete FilterTable->itemDelegate();
 }
 
 void
 SettingsWindow::show() {
   __updateWindow();
   QWidget::show();
-}
-
-void
-SettingsWindow::addFilterSetupWidget(FilterSetupWidget* _fsw) {
-  FiltersLayout->addWidget(_fsw);
 }
 
 void
@@ -137,6 +145,9 @@ SettingsWindow::__handleAlwaysCheckBox(int _state) {
   }
 }
 
-
+void
+SettingsWindow::__adjustFilterTable(int, int) {
+  FilterTable->resizeColumnsToContents();
+}
 
 

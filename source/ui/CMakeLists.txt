@@ -38,7 +38,6 @@ set (ui_SRCS
     buttons/clientdetailsbutton.cpp
     buttons/showairportbutton.cpp
     
-    widgets/filtersetupwidget.cpp
     widgets/mapwidget.cpp
     widgets/replaceablewidget.cpp
     
@@ -70,7 +69,6 @@ set (ui_MOC_SRCS
     buttons/clientdetailsbutton.h
     buttons/showairportbutton.h
     
-    widgets/filtersetupwidget.h
     widgets/mapwidget.h
     widgets/replaceablewidget.h
     

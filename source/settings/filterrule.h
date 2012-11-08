@@ -20,6 +20,7 @@
 #ifndef FILTERRULE_H
 #define FILTERRULE_H
 
+#include <QCoreApplication>
 #include <QString>
 
 class Pilot;
@@ -31,6 +32,8 @@ class FilterRule {
    * It can, among others, filter planes by callsign, pilot name or
    * altitude.
    */
+  
+  Q_DECLARE_TR_FUNCTIONS(FilterRule);
   
 public:
   
@@ -55,10 +58,21 @@ public:
    */
   bool matches(const Pilot&) const;
   
+  /**
+   * @return "Callsign ends with foo" etc etc.
+   */
+  QString getName() const;
+  
+  inline bool
+  isActive() const { return __active; }
+  
 private:
+  QString __convertFieldToString() const;
+  
   FilterField __field;
   QString __rule;
   
+  bool __active;
   
 };
 

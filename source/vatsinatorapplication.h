@@ -30,7 +30,7 @@
 class AirportDatabase;
 class CacheFile;
 class FirDatabase;
-class FilterManager;
+class FilterTableModel;
 class HttpHandler;
 class LanguageManager;
 class ModuleManager;
@@ -115,7 +115,7 @@ private:
   HttpHandler*       __httpHandler;
   AirportDatabase*   __airportsData;
   FirDatabase*       __firsData;
-  FilterManager*     __filterManager;
+  FilterTableModel*  __filterManager;
   WorldMap*          __worldMap;
   VatsimDataHandler* __vatsimData;
   LanguageManager*   __languageManager;

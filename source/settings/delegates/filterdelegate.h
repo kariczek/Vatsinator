@@ -1,5 +1,5 @@
 /*
-    filtermanager.cpp
+    filterdelegate.h
     Copyright (C) 2012  Michał Garapich michal@garapich.pl
 
     This program is free software: you can redistribute it and/or modify
@@ -16,27 +16,30 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "vatsimdata/client/pilot.h"
 
-#include "filtermanager.h"
-#include "defines.h"
+#ifndef FILTERDELEGATE_H
+#define FILTERDELEGATE_H
 
-FilterManager::FilterManager() {}
+#include <QStyledItemDelegate>
 
-FilterManager::~FilterManager() {
-  qDeleteAll(__filters);
-}
-
-void
-FilterManager::addFilter(FilterRule::FilterField _field, const QString& _rule) {
-  __filters.push_back(new FilterRule(_field, _rule));
-}
-
-bool
-FilterManager::matches(const Pilot& _pilot) const {
-  for (const FilterRule* fr: __filters)
-    if (!fr->matches(_pilot))
-      return false;
+class FilterDelegate : public QStyledItemDelegate {
   
-  return true;
-}
+  Q_OBJECT
+  
+public:
+  explicit FilterDelegate(QObject* = 0);
+  
+  void paint(QPainter*, const QStyleOptionViewItem&, const QModelIndex&) const;
+  
+  QSize sizeHint(const QStyleOptionViewItem&,const QModelIndex&) const;
+  
+private:
+  const QStyleOptionButton* __getStyleOptionCheckBox(const QStyleOptionViewItem&, bool) const;
+  const QStyleOptionButton* __getStyleOptionCheckBox(bool) const;
+  
+  mutable QStyleOptionButton __optChkBox;
+  
+  
+};
+
+#endif // FILTERDELEGATE_H

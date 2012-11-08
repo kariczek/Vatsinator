@@ -24,7 +24,7 @@
 
 #include "modules/modelmatcher.h"
 
-#include "settings/filtermanager.h"
+#include "settings/models/filtertablemodel.h"
 #include "settings/settingsmanager.h"
 
 #include "ui/widgets/mapwidget.h"
@@ -95,7 +95,7 @@ Pilot::Pilot(const QStringList& _data, bool _prefiled) :
     __lineFrom(NULL),
     __lineTo(NULL),
     __callsignTip(0),
-    __matchesFilters(FilterManager::getSingleton().matches(*this)) {
+    __matchesFilters(true) {
   // vatsim sometimes skips the 0 on the beginning
   if (squawk.length() == 3)
     squawk.prepend("0");

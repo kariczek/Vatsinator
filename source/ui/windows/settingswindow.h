@@ -23,7 +23,6 @@
 #include "ui/ui_settingswindow.h"
 #include "singleton.h"
 
-class FilterSetupWidget;
 class SettingsManager;
 
 class SettingsWindow :
@@ -37,10 +36,10 @@ class SettingsWindow :
 
 public:
   SettingsWindow(QWidget* = 0);
+  virtual ~SettingsWindow();
 
 public slots:
   void show();
-  void addFilterSetupWidget(FilterSetupWidget*);
 
 private:
 
@@ -56,6 +55,9 @@ private slots:
 
   /* Disables checkboxes */
   void __handleAlwaysCheckBox(int);
+  
+  /* Resizes FilterTable columns */
+  void __adjustFilterTable(int, int);
   
 signals:
   void restoreDefaults();
