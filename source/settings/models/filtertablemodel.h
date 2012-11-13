@@ -42,9 +42,17 @@ public:
   int columnCount(const QModelIndex& = QModelIndex()) const;
   QVariant data(const QModelIndex&, int = Qt::DisplayRole) const;
   
+  inline FilterRule &
+  getFilter(int _row) { return *__filters[_row]; }
+  
+  inline const FilterRule &
+  getFilter(int _row) const { return *__filters[_row]; }
+  
   enum Column {
-    Active = 0,
-    Title = 1
+    ActiveCheckBox = 0,
+    Title = 1,
+    EditButton = 2,
+    DeleteButton = 3
   };
   
 public slots:

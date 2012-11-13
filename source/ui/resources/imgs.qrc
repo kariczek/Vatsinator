@@ -14,6 +14,8 @@
     <file>view-refresh.png</file>
     <file>weather-clouds.png</file>
     <file>application-exit.png</file>
+    <file>button-delete.png</file>
+    <file>button-edit.png</file>
   </qresource>
   <qresource prefix="pixmaps">
     <file>airport_inactive.png</file>

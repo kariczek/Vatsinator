@@ -39,7 +39,7 @@ FilterTableModel::rowCount(const QModelIndex&) const {
 
 int
 FilterTableModel::columnCount(const QModelIndex&) const {
-  return 2;
+  return 4;
 }
 
 QVariant
@@ -49,7 +49,7 @@ FilterTableModel::data(const QModelIndex& _index, int _role) const {
   
   switch (_role) {
     case Qt::TextAlignmentRole:
-      return Qt::AlignCenter;
+      return static_cast< int >(Qt::AlignLeft | Qt::AlignVCenter);
     case Qt::FontRole:
       return __displayFont;
     case Qt::DisplayRole:

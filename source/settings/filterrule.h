@@ -63,6 +63,11 @@ public:
    */
   QString getName() const;
   
+  /**
+   * Toogles filter active/inactive.
+   */
+  void toggle();
+  
   inline bool
   isActive() const { return __active; }
   

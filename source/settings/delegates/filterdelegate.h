@@ -33,12 +33,16 @@ public:
   
   QSize sizeHint(const QStyleOptionViewItem&,const QModelIndex&) const;
   
+  bool editorEvent(QEvent*, QAbstractItemModel*, const QStyleOptionViewItem&, const QModelIndex&);
+  
 private:
   const QStyleOptionButton* __getStyleOptionCheckBox(const QStyleOptionViewItem&, bool) const;
-  const QStyleOptionButton* __getStyleOptionCheckBox(bool) const;
+  const QStyleOptionButton* __getStyleOptionDeleteButton(const QStyleOptionViewItem&) const;
+  const QStyleOptionButton* __getStyleOptionEditButton(const QStyleOptionViewItem&) const;
   
-  mutable QStyleOptionButton __optChkBox;
-  
+  mutable QStyleOptionButton __optCheckBox;
+  mutable QStyleOptionButton __optDeleteButton;
+  mutable QStyleOptionButton __optEditButton;
   
 };
 

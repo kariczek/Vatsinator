@@ -45,6 +45,11 @@ FilterRule::getName() const {
   return __convertFieldToString() % " " % __rule;
 }
 
+void
+FilterRule::toggle() {
+  __active = !__active;
+}
+
 QString
 FilterRule::__convertFieldToString() const {
   switch (__field) {
