@@ -111,6 +111,7 @@ VatsinatorApplication::~VatsinatorApplication() {
   delete __settingsManager;
   delete __languageManager;
   delete __httpHandler;
+  delete __filterManager;
   delete __vatsimData;
   delete __airportsData;
   delete __firsData;

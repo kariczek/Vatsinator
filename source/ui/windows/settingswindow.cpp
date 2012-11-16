@@ -18,12 +18,12 @@
 
 #include <QtGui>
 
-#include "settings/delegates/filterdelegate.h"
-
 #include "settings/models/filtertablemodel.h"
 
 #include "settings/languagemanager.h"
 #include "settings/settingsmanager.h"
+
+#include "ui/delegates/filterdelegate.h"
 
 #include "ui/widgets/mapwidget.h"
 

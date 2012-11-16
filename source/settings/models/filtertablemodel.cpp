@@ -53,7 +53,12 @@ FilterTableModel::data(const QModelIndex& _index, int _role) const {
     case Qt::FontRole:
       return __displayFont;
     case Qt::DisplayRole:
-      return __filters[_index.row()]->getName();
+      switch (_index.column()) {
+        case FilterTableModel::ActiveCheckBox:
+          return __filters[_index.row()]->isActive();
+        case FilterTableModel::Title:
+          return __filters[_index.row()]->getName();
+      }
     default:
       return QVariant();
   }
