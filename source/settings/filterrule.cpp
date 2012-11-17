@@ -21,10 +21,10 @@
 #include "filterrule.h"
 #include "defines.h"
 
-FilterRule::FilterRule(FilterRule::FilterField _field, const QString& _rule) :
+FilterRule::FilterRule(FilterRule::FilterField _field, const QString& _rule, bool _active) :
     __field(_field),
     __rule(_rule),
-    __active(false) {}
+    __active(_active) {}
 
 bool
 FilterRule::matches(const Pilot& _pilot) const {

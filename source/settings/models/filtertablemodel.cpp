@@ -65,10 +65,28 @@ FilterTableModel::data(const QModelIndex& _index, int _role) const {
 }
 
 void
-FilterTableModel::newFilter() {
+FilterTableModel::addFilter(FilterRule* _rule) {
   beginInsertRows(QModelIndex(), rowCount(), rowCount());
-  __filters.push_back(new FilterRule(FilterRule::CALLSIGN_STARTS_WITH, ""));
+  __filters.push_back(_rule);
   endInsertRows();
+}
+
+void
+FilterTableModel::removeFilter(int _row) {
+  Q_ASSERT(_row < __filters.size());
+  
+  beginRemoveRows(QModelIndex(), _row, _row);
+  delete __filters[_row];
+  __filters.remove(_row);
+  endRemoveRows();
+}
+
+void
+FilterTableModel::updateFilter(int _row, const FilterRule& _newRule) {
+  Q_ASSERT(_row < __filters.size());
+  
+  __filters[_row]->setField(_newRule.getField());
+  __filters[_row]->setRule(_newRule.getRule());
 }
 
 

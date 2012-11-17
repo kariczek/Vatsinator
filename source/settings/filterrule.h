@@ -48,8 +48,9 @@ public:
    * field.
    * @param field Where to match the filter.
    * @param rule Rule to be matched.
+   * @param active Is filter active or not? By default, it is.
    */
-  FilterRule(FilterField, const QString&);
+  FilterRule(FilterField, const QString&, bool = true);
   
   /**
    * Checks if the pilot matches the rule.
@@ -68,8 +69,20 @@ public:
    */
   void toggle();
   
+  inline FilterField
+  getField() const { return __field; }
+  
+  inline const QString &
+  getRule() const { return __rule; }
+  
   inline bool
   isActive() const { return __active; }
+  
+  inline void
+  setField(FilterField _f) { __field = _f; }
+  
+  inline void
+  setRule(const QString& _r) { __rule = _r; }
   
 private:
   QString __convertFieldToString() const;

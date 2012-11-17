@@ -121,20 +121,15 @@ FilterDelegate::sizeHint(const QStyleOptionViewItem& _option,
   switch (_index.column()) {
     case FilterTableModel::ActiveCheckBox:
       return QApplication::style()->sizeFromContents(QStyle::CT_CheckBox,
-                                                     &__optCheckBox,
-                                                     QSize(3, 3)).
-            expandedTo(QApplication::globalStrut());
+                                                   &__optCheckBox,
+                                                   QSize(3, 3)).
+        expandedTo(QApplication::globalStrut());
+      
     case FilterTableModel::DeleteButton:
-      return QApplication::style()->sizeFromContents(QStyle::CT_PushButton,
-                                                     &__optDeleteButton,
-                                                     QSize(40, 25)).
-            expandedTo(QApplication::globalStrut());
-    
+      return QSize(44, 25);
+      
     case FilterTableModel::EditButton:
-      return QApplication::style()->sizeFromContents(QStyle::CT_PushButton,
-                                                     &__optEditButton,
-                                                     QSize(40, 25)).
-            expandedTo(QApplication::globalStrut());
+      return QSize(44, 25);
     
     default:
       return QStyledItemDelegate::sizeHint(_option, _index);
@@ -147,13 +142,10 @@ FilterDelegate::editorEvent(QEvent* _event,
                             const QStyleOptionViewItem&,
                             const QModelIndex& _index) {
   
-  FilterTableModel* realModel = qobject_cast< FilterTableModel* >(_model);
-  
   switch (_event->type()) {
     case QEvent::MouseButtonRelease:
-      if (_index.column() == FilterTableModel::ActiveCheckBox)
-        realModel->getFilter(_index.row()).toggle();
       __mouse.down = false;
+      emit activated(_index);
       break;
       
     case QEvent::MouseButtonPress:

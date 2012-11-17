@@ -20,10 +20,13 @@
 
 #include "settings/models/filtertablemodel.h"
 
+#include "settings/filterrule.h"
 #include "settings/languagemanager.h"
 #include "settings/settingsmanager.h"
 
 #include "ui/delegates/filterdelegate.h"
+
+#include "ui/dialogs/filterdialog.h"
 
 #include "ui/widgets/mapwidget.h"
 
@@ -38,11 +41,18 @@ SettingsWindow::SettingsWindow(QWidget* _parent) :
   setupUi(this);
   UserInterface::setWindowPosition(this);
   LanguageComboBox->addItems(LanguageManager::getSingleton().getAllLanguages());
+  
   FilterTable->setItemDelegate(new FilterDelegate());
   FilterTable->setModel(FilterTableModel::getSingletonPtr());
+  
+  QHeaderView* hv = FilterTable->horizontalHeader();
+  hv->setResizeMode(QHeaderView::ResizeToContents);
+  hv->setResizeMode(FilterTableModel::Column::Title, QHeaderView::Stretch);
 
   connect(FilterTable->verticalHeader(),  SIGNAL(sectionCountChanged(int,int)),
           this,                           SLOT(__adjustFilterTable(int, int)));
+  connect(FilterTable,                    SIGNAL(activated(QModelIndex)),
+          this,                           SLOT(__handleFilterViewButtonClicked(const QModelIndex&)));
   connect(OKCancelButtonBox,              SIGNAL(clicked(QAbstractButton*)),
           this,                           SLOT(__handleButton(QAbstractButton*)));
   connect(OKCancelButtonBox,              SIGNAL(accepted()),
@@ -51,8 +61,8 @@ SettingsWindow::SettingsWindow(QWidget* _parent) :
           this,                           SLOT(__handleAlwaysCheckBox(int)));
   connect(__mySettingsManager,            SIGNAL(settingsRestored()),
           this,                           SLOT(__updateWindow()));
-  connect(AddFilterButton,                       SIGNAL(clicked()),
-          FilterTableModel::getSingletonPtr(),   SLOT(newFilter()));
+  connect(AddFilterButton,                SIGNAL(clicked()),
+          this,                           SLOT(__obtainNewFilter()));
 }
 
 SettingsWindow::~SettingsWindow() {
@@ -148,6 +158,47 @@ SettingsWindow::__handleAlwaysCheckBox(int _state) {
 void
 SettingsWindow::__adjustFilterTable(int, int) {
   FilterTable->resizeColumnsToContents();
+}
+
+void
+SettingsWindow::__obtainNewFilter() {
+  FilterDialog* dialog = new FilterDialog(this);
+  
+  if (dialog->exec() == QDialog::Accepted) {
+    qobject_cast< FilterTableModel* >(FilterTable->model())->addFilter(
+        new FilterRule(dialog->getField(), dialog->getRule())
+      );
+  }
+  
+  delete dialog;
+}
+
+void
+SettingsWindow::__handleFilterViewButtonClicked(const QModelIndex& _index) {
+  switch(_index.column()) {
+    case FilterTableModel::ActiveCheckBox:
+      qobject_cast< FilterTableModel* >(FilterTable->model())->getFilter(_index.row())->toggle();
+      break;
+      
+    case FilterTableModel::DeleteButton:
+      qobject_cast< FilterTableModel* >(FilterTable->model())->removeFilter(_index.row());
+      break;
+      
+    case FilterTableModel::EditButton: {
+      FilterTableModel* model = qobject_cast< FilterTableModel* >(FilterTable->model());
+      
+      FilterDialog* dialog = new FilterDialog(this, model->getFilter(_index.row()));
+      
+      if (dialog->exec() == QDialog::Accepted) {
+        model->updateFilter(_index.row(), FilterRule(dialog->getField(), dialog->getRule()));
+      }
+      
+      delete dialog;
+    }
+    
+    default:
+      break;
+  }
 }
 
 

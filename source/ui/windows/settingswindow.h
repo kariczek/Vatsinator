@@ -42,7 +42,6 @@ public slots:
   void show();
 
 private:
-
   SettingsManager* __mySettingsManager;
 
 private slots:
@@ -58,6 +57,12 @@ private slots:
   
   /* Resizes FilterTable columns */
   void __adjustFilterTable(int, int);
+  
+  /* Shows FilterDialog */
+  void __obtainNewFilter();
+  
+  /* Handles button press */
+  void __handleFilterViewButtonClicked(const QModelIndex&);
   
 signals:
   void restoreDefaults();

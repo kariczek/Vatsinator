@@ -42,8 +42,12 @@ public:
   int columnCount(const QModelIndex& = QModelIndex()) const;
   QVariant data(const QModelIndex&, int = Qt::DisplayRole) const;
   
-  inline FilterRule &
-  getFilter(int _row) { return *__filters[_row]; }
+  void addFilter(FilterRule*);
+  void removeFilter(int);
+  void updateFilter(int, const FilterRule&);
+  
+  inline FilterRule *
+  getFilter(int _row) { return __filters[_row]; }
   
   inline const FilterRule &
   getFilter(int _row) const { return *__filters[_row]; }
@@ -54,9 +58,6 @@ public:
     EditButton = 2,
     DeleteButton = 3
   };
-  
-public slots:
-  void newFilter();
   
 private:
   QVector< FilterRule* > __filters;

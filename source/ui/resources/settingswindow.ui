@@ -903,7 +903,7 @@
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_7">
             <item>
-             <widget class="QTableView" name="FilterTable">
+             <widget class="FilterTableView" name="FilterTable">
               <property name="mouseTracking">
                <bool>true</bool>
               </property>
@@ -1089,6 +1089,11 @@
    <class>ColorButton</class>
    <extends>QPushButton</extends>
    <header>ui/buttons/colorbutton.h</header>
+  </customwidget>
+  <customwidget>
+   <class>FilterTableView</class>
+   <extends>QTableView</extends>
+   <header>ui/views/filtertableview.h</header>
   </customwidget>
  </customwidgets>
  <resources>

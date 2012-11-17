@@ -61,6 +61,9 @@ private:
     bool down;
   } __mouse;
   
+signals:
+  void activated(QModelIndex);
+  
 };
 
 #endif // FILTERDELEGATE_H

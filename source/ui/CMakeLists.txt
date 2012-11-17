@@ -40,6 +40,10 @@ set (ui_SRCS
     
     delegates/filterdelegate.cpp
     
+    dialogs/filterdialog.cpp
+    
+    views/filtertableview.cpp
+    
     widgets/mapwidget.cpp
     widgets/replaceablewidget.cpp
     
@@ -73,6 +77,10 @@ set (ui_MOC_SRCS
     
     delegates/filterdelegate.h
     
+    dialogs/filterdialog.h
+    
+    views/filtertableview.h
+    
     widgets/mapwidget.h
     widgets/replaceablewidget.h
     
@@ -94,6 +102,7 @@ set (ui_FORMS
     resources/airportdetailswindow.ui
     resources/atcdetailswindow.ui
     resources/atclistwindow.ui
+    resources/filterdialog.ui
     resources/firdetailswindow.ui
     resources/flightdetailswindow.ui
     resources/flightlistwindow.ui
