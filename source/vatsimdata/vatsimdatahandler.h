@@ -198,6 +198,9 @@ public:
            );
   }
   
+public slots:
+  void filterClients();
+  
 private:
   /**
    * These functions read data files.

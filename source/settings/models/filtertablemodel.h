@@ -27,6 +27,7 @@
 #include "singleton.h"
 
 class FilterRule;
+class Pilot;
 
 class FilterTableModel :
     public QAbstractTableModel,
@@ -45,6 +46,8 @@ public:
   void addFilter(FilterRule*);
   void removeFilter(int);
   void updateFilter(int, const FilterRule&);
+  
+  bool matches(const Pilot*);
   
   inline FilterRule *
   getFilter(int _row) { return __filters[_row]; }

@@ -37,8 +37,6 @@ SettingsManager::SettingsManager(QObject* _parent) :
 void
 SettingsManager::init() {
   __mySettingsWindow = SettingsWindow::getSingletonPtr();
-  connect(__mySettingsWindow->OKCancelButtonBox,  SIGNAL(accepted()),
-          this,                                   SLOT(__updateSettings()));
   connect(__mySettingsWindow,                     SIGNAL(settingsApplied()),
           this,                                   SLOT(__updateSettings()));
   connect(__mySettingsWindow,                     SIGNAL(restoreDefaults()),

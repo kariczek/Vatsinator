@@ -74,6 +74,9 @@ VatsinatorApplication::VatsinatorApplication(int& _argc, char** _argv) :
   // connect EnableAutoUpdatesAction toggle
   connect(__userInterface,  SIGNAL(autoUpdatesEnabled(bool)),
           this,             SLOT(__autoUpdatesToggled(bool)));
+  
+  connect(SettingsWindow::getSingletonPtr(), SIGNAL(settingsApplied()),
+          __vatsimData,                      SLOT(filterClients()));
 
   // SettingsManager instance is now created, let him get the pointer & connect his slots
   __settingsManager->init();

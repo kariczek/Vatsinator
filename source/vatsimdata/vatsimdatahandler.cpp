@@ -254,6 +254,12 @@ VatsimDataHandler::obsCount() const {
 }
 
 void
+VatsimDataHandler::filterClients() {
+  for (const Pilot* p: __flights->getFlights())
+    p->checkFilters();
+}
+
+void
 VatsimDataHandler::__readAliasFile(const QString& _fName) {
   VatsinatorApplication::log("Reading \"alias\" file...");
   

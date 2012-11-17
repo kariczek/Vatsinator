@@ -22,6 +22,7 @@
 
 #include <QCoreApplication>
 #include <QString>
+#include <QVariant>
 
 class Pilot;
 
@@ -40,7 +41,11 @@ public:
   enum FilterField {
     CALLSIGN_STARTS_WITH,
     CALLSIGN_ENDS_WITH,
-    CALLSIGN_CONTAINS
+    CALLSIGN_CONTAINS,
+    
+    ALTITUDE_ABOVE,
+    ALTITUDE_BELOW,
+    ALTITUDE_ABOUT
   };
   
   /**
@@ -50,14 +55,14 @@ public:
    * @param rule Rule to be matched.
    * @param active Is filter active or not? By default, it is.
    */
-  FilterRule(FilterField, const QString&, bool = true);
+  FilterRule(FilterField, const QVariant&, bool = true);
   
   /**
    * Checks if the pilot matches the rule.
    * @param pilot Pilot the rule will be tested on.
    * @return True if pilot passes the test, otherwise - false.
    */
-  bool matches(const Pilot&) const;
+  bool matches(const Pilot*) const;
   
   /**
    * @return "Callsign ends with foo" etc etc.
@@ -69,26 +74,34 @@ public:
    */
   void toggle();
   
-  inline FilterField
-  getField() const { return __field; }
+  /**
+   * Checks whether the particular field is numeric (int) or not.
+   * If not, it is string.
+   * @param field Field to be checked.
+   */
+  static bool isNumeric(FilterField);
   
-  inline const QString &
-  getRule() const { return __rule; }
-  
+    
   inline bool
   isActive() const { return __active; }
   
-  inline void
-  setField(FilterField _f) { __field = _f; }
+  inline const QVariant &
+  getRule() const { return __rule; }
   
   inline void
-  setRule(const QString& _r) { __rule = _r; }
+  setRule(const QVariant& _r) { __rule = _r; }
+  
+  inline FilterField
+  getField() const { return __field; }
+  
+  inline void
+  setField(FilterField _f) { __field = _f; }
   
 private:
   QString __convertFieldToString() const;
   
   FilterField __field;
-  QString __rule;
+  QVariant    __rule;
   
   bool __active;
   

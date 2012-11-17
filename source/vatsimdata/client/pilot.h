@@ -56,6 +56,8 @@ public:
 
   void drawLineFrom() const;
   void drawLineTo() const;
+  
+  void checkFilters() const;
 
   inline void
   drawLines() const { drawLineFrom(); drawLineTo(); }
@@ -126,7 +128,7 @@ private:
   mutable GLuint __callsignTip;
   
   /* Indicates whether pilot matches all filters or not */
-  bool __matchesFilters;
+  mutable bool __matchesFilters;
 
 };
 

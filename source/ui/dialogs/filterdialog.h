@@ -20,6 +20,10 @@
 #ifndef FILTERDIALOG_H
 #define FILTERDIALOG_H
 
+#include <QLineEdit>
+#include <QSpinBox>
+#include <QStringListModel>
+
 #include "settings/filterrule.h"
 #include "ui/ui_filterdialog.h"
 
@@ -32,8 +36,18 @@ public:
   
   FilterRule::FilterField getField() const;
   
-  inline QString
-  getRule() const { return RuleLineEdit->text().toUpper(); }
+  QVariant getRule() const;
+  
+private:
+  static QStringListModel __fieldBeginModel;
+  static QStringListModel __fieldCallsignModel;
+  static QStringListModel __fieldAltitudeModel;
+  
+  QLineEdit*  __ruleLineEdit;
+  QSpinBox*   __ruleSpinBox;
+  
+private slots:
+  void __handleIndexChange(int);
   
 };
 

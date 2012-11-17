@@ -128,12 +128,12 @@ SettingsWindow::__updateWindow() {
     );
 }
 
-
 void
 SettingsWindow::__handleButton(QAbstractButton* _button) {
   if (OKCancelButtonBox->button(QDialogButtonBox::RestoreDefaults) == _button) {
     emit restoreDefaults();
-  } else if (OKCancelButtonBox->button(QDialogButtonBox::Apply) == _button) {
+  } else if (OKCancelButtonBox->button(QDialogButtonBox::Apply) == _button ||
+             OKCancelButtonBox->button(QDialogButtonBox::Ok) == _button) {
     emit settingsApplied();
   }
 }

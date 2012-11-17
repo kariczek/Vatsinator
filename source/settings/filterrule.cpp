@@ -21,20 +21,29 @@
 #include "filterrule.h"
 #include "defines.h"
 
-FilterRule::FilterRule(FilterRule::FilterField _field, const QString& _rule, bool _active) :
+FilterRule::FilterRule(FilterRule::FilterField _field, const QVariant& _rule, bool _active) :
     __field(_field),
     __rule(_rule),
     __active(_active) {}
 
 bool
-FilterRule::matches(const Pilot& _pilot) const {
+FilterRule::matches(const Pilot* _pilot) const {
+  if (!__active)
+    return false;
+  
   switch (__field) {
     case CALLSIGN_STARTS_WITH:
-      return _pilot.callsign.startsWith(__rule);
+      return _pilot->callsign.startsWith(__rule.toString());
     case CALLSIGN_ENDS_WITH:
-      return _pilot.callsign.endsWith(__rule);
+      return _pilot->callsign.endsWith(__rule.toString());
     case CALLSIGN_CONTAINS:
-      return _pilot.callsign.contains(__rule);
+      return _pilot->callsign.contains(__rule.toString());
+    case ALTITUDE_ABOVE:
+      return _pilot->altitude > __rule.toInt();
+    case ALTITUDE_BELOW:
+      return _pilot->altitude < __rule.toInt();
+    case ALTITUDE_ABOUT:
+      return (_pilot->altitude > __rule.toInt() - 1000) && (_pilot->altitude < __rule.toInt() + 1000);
   }
   
   return false;
@@ -42,12 +51,39 @@ FilterRule::matches(const Pilot& _pilot) const {
 
 QString
 FilterRule::getName() const {
-  return __convertFieldToString() % " " % __rule;
+  switch (__field) {
+    case CALLSIGN_STARTS_WITH:
+    case CALLSIGN_ENDS_WITH:
+    case CALLSIGN_CONTAINS:
+      return __convertFieldToString() % " " % __rule.toString();
+    case ALTITUDE_ABOVE:
+    case ALTITUDE_BELOW:
+    case ALTITUDE_ABOUT:
+      return __convertFieldToString() % " " % QString::number(__rule.toInt()) % " " % tr("feet");
+  }
+  
+  return "";
 }
 
 void
 FilterRule::toggle() {
   __active = !__active;
+}
+
+bool
+FilterRule::isNumeric(FilterRule::FilterField _field) {
+  switch (_field) {
+    case CALLSIGN_STARTS_WITH:
+    case CALLSIGN_ENDS_WITH:
+    case CALLSIGN_CONTAINS:
+      return false;
+    case ALTITUDE_ABOVE:
+    case ALTITUDE_BELOW:
+    case ALTITUDE_ABOUT:
+      return true;
+  }
+  
+  return false;
 }
 
 QString
@@ -59,6 +95,12 @@ FilterRule::__convertFieldToString() const {
       return tr("Callsign ends with");
     case CALLSIGN_CONTAINS:
       return tr("Callsign contains");
+    case ALTITUDE_ABOVE:
+      return tr("Altitude above");
+    case ALTITUDE_BELOW:
+      return tr("Altitude below");
+    case ALTITUDE_ABOUT:
+      return tr("Altitude about");
     default:
       return QString();
   }

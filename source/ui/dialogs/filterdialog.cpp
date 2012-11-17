@@ -21,29 +21,85 @@
 #include "filterdialog.h"
 #include "defines.h"
 
+QStringListModel FilterDialog::__fieldBeginModel(QStringList({
+    tr("callsign"),
+    tr("altitude")
+  }));
+  
+QStringListModel FilterDialog::__fieldCallsignModel(QStringList({
+    tr("starts with"),
+    tr("contains"),
+    tr("ends with")
+  }));
+
+QStringListModel FilterDialog::__fieldAltitudeModel(QStringList({
+    tr("above"),
+    tr("below"),
+    tr("about")
+  }));
+
 FilterDialog::FilterDialog(QWidget* _parent, const FilterRule* _rule) :
    QDialog(_parent) {
   setupUi(this);
+  
+  __ruleLineEdit = new QLineEdit();
+  RuleEdit->addWidget(__ruleLineEdit);
+  
+  __ruleSpinBox = new QSpinBox();
+  __ruleSpinBox->setSuffix(" " % tr("feet"));
+  __ruleSpinBox->setSingleStep(1000);
+  __ruleSpinBox->setRange(0, 100000);
+  __ruleSpinBox->setValue(1000);
+  RuleEdit->addWidget(__ruleSpinBox);
+  
+  FieldBeginComboBox->setModel(&__fieldBeginModel);
+  FieldEndComboBox->setModel(&__fieldCallsignModel);
+  
+    
+  connect(FieldBeginComboBox,      SIGNAL(currentIndexChanged(int)),
+          this,                    SLOT(__handleIndexChange(int)));
   
   if (_rule) {
     switch (_rule->getField()) {
       case FilterRule::FilterField::CALLSIGN_STARTS_WITH:
         FieldBeginComboBox->setCurrentIndex(0);
         FieldEndComboBox->setCurrentIndex(0);
+        __ruleLineEdit->setText(_rule->getRule().toString());
         break;
+        
       case FilterRule::FilterField::CALLSIGN_CONTAINS:
         FieldBeginComboBox->setCurrentIndex(0);
         FieldEndComboBox->setCurrentIndex(1);
+        __ruleLineEdit->setText(_rule->getRule().toString());
         break;
+        
       case FilterRule::FilterField::CALLSIGN_ENDS_WITH:
         FieldBeginComboBox->setCurrentIndex(0);
         FieldEndComboBox->setCurrentIndex(2);
+        __ruleLineEdit->setText(_rule->getRule().toString());
         break;
+        
+      case FilterRule::FilterField::ALTITUDE_ABOVE:
+        FieldBeginComboBox->setCurrentIndex(1);
+        FieldEndComboBox->setCurrentIndex(0);
+        __ruleSpinBox->setValue(_rule->getRule().toInt());
+        break;
+        
+      case FilterRule::FilterField::ALTITUDE_BELOW:
+        FieldBeginComboBox->setCurrentIndex(1);
+        FieldEndComboBox->setCurrentIndex(1);
+        __ruleSpinBox->setValue(_rule->getRule().toInt());
+        break;
+        
+      case FilterRule::FilterField::ALTITUDE_ABOUT:
+        FieldBeginComboBox->setCurrentIndex(1);
+        FieldEndComboBox->setCurrentIndex(2);
+        __ruleSpinBox->setValue(_rule->getRule().toInt());
+        break;
+        
       default:
         break;
-    }
-    
-    RuleLineEdit->setText(_rule->getRule());
+    } 
   }
 }
 
@@ -58,10 +114,41 @@ FilterDialog::getField() const {
           return FilterRule::FilterField::CALLSIGN_CONTAINS;
         case 2:
           return FilterRule::FilterField::CALLSIGN_ENDS_WITH;
-        default:
-          return FilterRule::FilterField::CALLSIGN_STARTS_WITH;
       }
+    case 1:
+      switch (FieldEndComboBox->currentIndex()) {
+        case 0:
+          return FilterRule::FilterField::ALTITUDE_ABOVE;
+        case 1:
+          return FilterRule::FilterField::ALTITUDE_BELOW;
+        case 2:
+          return FilterRule::FilterField::ALTITUDE_ABOUT;
+      }
+  }
+  
+  return FilterRule::FilterField::CALLSIGN_STARTS_WITH;
+}
+
+QVariant
+FilterDialog::getRule() const {
+  if (FilterRule::isNumeric(getField()))
+    return __ruleSpinBox->value();
+  else
+    return __ruleLineEdit->text().toUpper();
+}
+
+void
+FilterDialog::__handleIndexChange(int _index) {
+  switch (_index) {
+    case 0:
+      FieldEndComboBox->setModel(&__fieldCallsignModel);
+      RuleEdit->setCurrentWidget(__ruleLineEdit);
+      break;
+    case 1:
+      FieldEndComboBox->setModel(&__fieldAltitudeModel);
+      RuleEdit->setCurrentWidget(__ruleSpinBox);
+      break;
     default:
-      return FilterRule::FilterField::CALLSIGN_STARTS_WITH;
+      break;
   }
 }

@@ -89,4 +89,13 @@ FilterTableModel::updateFilter(int _row, const FilterRule& _newRule) {
   __filters[_row]->setRule(_newRule.getRule());
 }
 
+bool
+FilterTableModel::matches(const Pilot* _p) {
+  for (const FilterRule* fr: __filters)
+    if (fr->matches(_p))
+      return true;
+  
+  return false;
+}
+
 

@@ -129,6 +129,7 @@ Pilot::Pilot(const QStringList& _data, bool _prefiled) :
 
   __setMyStatus();
   __generateLines();
+  checkFilters();
 
   modelTexture = ModelMatcher::getSingleton().matchMyModel(aircraft);
 }
@@ -170,6 +171,11 @@ Pilot::drawLineTo() const {
     glDrawArrays(GL_LINES, 0, 2);
     glLineStipple(1, 0xFFFF);
   }
+}
+
+void
+Pilot::checkFilters() const {
+  __matchesFilters = FilterTableModel::getSingleton().matches(this);
 }
 
 void
