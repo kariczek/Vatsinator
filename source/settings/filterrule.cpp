@@ -51,23 +51,32 @@ FilterRule::matches(const Pilot* _pilot) const {
 
 QString
 FilterRule::getName() const {
-  switch (__field) {
-    case CALLSIGN_STARTS_WITH:
-    case CALLSIGN_ENDS_WITH:
-    case CALLSIGN_CONTAINS:
-      return __convertFieldToString() % " " % __rule.toString();
-    case ALTITUDE_ABOVE:
-    case ALTITUDE_BELOW:
-    case ALTITUDE_ABOUT:
+    if (isNumeric(__field))
       return __convertFieldToString() % " " % QString::number(__rule.toInt()) % " " % tr("feet");
-  }
-  
-  return "";
+    else
+      return __convertFieldToString() % " " % __rule.toString();
 }
 
 void
 FilterRule::toggle() {
   __active = !__active;
+}
+
+QString
+FilterRule::encode() const {
+  return QString::number(__field) % " " %
+    (isNumeric(__field) ? QString::number(__rule.toInt()) : __rule.toString());
+}
+
+FilterRule
+FilterRule::decode(const QString& _encoded) {
+  auto split = _encoded.split(' ');
+  FilterRule::FilterField field = static_cast< FilterRule::FilterField>(split.first().toUInt());
+  
+  if (isNumeric(field))
+    return FilterRule(field, split[1].toInt());
+  else
+    return FilterRule(field, split[1]);
 }
 
 bool

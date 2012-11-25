@@ -75,6 +75,16 @@ public:
   void toggle();
   
   /**
+   * Creates a string that represents current filter.
+   */
+  QString encode() const;
+  
+  /**
+   * Returns a new FilterRule, decoded from string.
+   */
+  static FilterRule decode(const QString&);
+  
+  /**
    * Checks whether the particular field is numeric (int) or not.
    * If not, it is string.
    * @param field Field to be checked.
