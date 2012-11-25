@@ -38,6 +38,8 @@ set (ui_SRCS
     buttons/clientdetailsbutton.cpp
     buttons/showairportbutton.cpp
     
+    views/metarlistview.cpp
+    
     widgets/mapwidget.cpp
     widgets/replaceablewidget.cpp
     
@@ -68,6 +70,8 @@ set (ui_MOC_SRCS
     buttons/colorbutton.h
     buttons/clientdetailsbutton.h
     buttons/showairportbutton.h
+    
+    views/metarlistview.h
     
     widgets/mapwidget.h
     widgets/replaceablewidget.h
