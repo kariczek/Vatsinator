@@ -68,15 +68,15 @@ FilterRule::encode() const {
     (isNumeric(__field) ? QString::number(__rule.toInt()) : __rule.toString());
 }
 
-FilterRule
+FilterRule *
 FilterRule::decode(const QString& _encoded) {
   auto split = _encoded.split(' ');
   FilterRule::FilterField field = static_cast< FilterRule::FilterField>(split.first().toUInt());
   
   if (isNumeric(field))
-    return FilterRule(field, split[1].toInt());
+    return new FilterRule(field, split[1].toInt());
   else
-    return FilterRule(field, split[1]);
+    return new FilterRule(field, split[1]);
 }
 
 bool

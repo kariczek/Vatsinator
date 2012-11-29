@@ -82,7 +82,7 @@ public:
   /**
    * Returns a new FilterRule, decoded from string.
    */
-  static FilterRule decode(const QString&);
+  static FilterRule* decode(const QString&);
   
   /**
    * Checks whether the particular field is numeric (int) or not.

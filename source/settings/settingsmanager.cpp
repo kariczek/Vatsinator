@@ -22,6 +22,8 @@
 
 #include "settings/languagemanager.h"
 
+#include "settings/models/filtertablemodel.h"
+
 #include "vatsinatorapplication.h"
 
 #include "settingsmanager.h"
@@ -75,6 +77,8 @@ SettingsManager::__saveSettings() {
   settings.setValue("pilotToDestinationLineColor", __pilotToDestinationLineColor);
   
   settings.setValue("language",                    __language);
+  
+  FilterTableModel::getSingleton().store(settings);
 
   settings.endGroup();
 }
@@ -140,6 +144,8 @@ SettingsManager::__restoreSettings() {
                                                  DefaultSettings::PILOT_TO_DESTINATION_LINE_COLOR).value<QColor>();
   __language = settings.value("language",
                               QLocale::system().name()).toString();
+
+  FilterTableModel::getSingleton().restore(settings);
 
   settings.endGroup();
 

@@ -28,6 +28,7 @@
 
 class FilterRule;
 class Pilot;
+class QSettings;
 
 class FilterTableModel :
     public QAbstractTableModel,
@@ -48,6 +49,9 @@ public:
   void updateFilter(int, const FilterRule&);
   
   bool matches(const Pilot*);
+  
+  void store(QSettings&);
+  void restore(QSettings&);
   
   inline FilterRule *
   getFilter(int _row) { return __filters[_row]; }

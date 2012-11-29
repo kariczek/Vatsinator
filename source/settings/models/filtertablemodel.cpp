@@ -98,4 +98,29 @@ FilterTableModel::matches(const Pilot* _p) {
   return false;
 }
 
+void
+FilterTableModel::store(QSettings& _s) {
+  _s.beginWriteArray("Filters", __filters.size());
+  
+  for (int i = 0; i < __filters.size(); ++i) {
+    _s.setArrayIndex(i);
+    _s.setValue("rule", __filters[i]->encode());
+  }
+  
+  _s.endArray();
+}
+
+void
+FilterTableModel::restore(QSettings& _s) {
+  int size = _s.beginReadArray("Filters");
+  
+  for (int i = 0; i < size; ++i) {
+    _s.setArrayIndex(i);
+    
+    addFilter(FilterRule::decode(_s.value("rule").toString()));
+  }
+  
+  _s.endArray();
+}
+
 
