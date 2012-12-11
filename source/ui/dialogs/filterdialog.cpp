@@ -22,20 +22,20 @@
 #include "defines.h"
 
 QStringListModel FilterDialog::__fieldBeginModel(QStringList({
-    tr("callsign"),
-    tr("altitude")
+    QT_TRANSLATE_NOOP("FilterDialog", "callsign"),
+    QT_TRANSLATE_NOOP("FilterDialog", "altitude")
   }));
   
 QStringListModel FilterDialog::__fieldCallsignModel(QStringList({
-    tr("starts with"),
-    tr("contains"),
-    tr("ends with")
+    QT_TRANSLATE_NOOP("FilterDialog", "starts with"),
+    QT_TRANSLATE_NOOP("FilterDialog", "contains"),
+    QT_TRANSLATE_NOOP("FilterDialog", "ends with")
   }));
 
 QStringListModel FilterDialog::__fieldAltitudeModel(QStringList({
-    tr("above"),
-    tr("below"),
-    tr("about")
+    QT_TRANSLATE_NOOP("FilterDialog", "above"),
+    QT_TRANSLATE_NOOP("FilterDialog", "below"),
+    QT_TRANSLATE_NOOP("FilterDialog", "about")
   }));
 
 FilterDialog::FilterDialog(QWidget* _parent, const FilterRule* _rule) :
